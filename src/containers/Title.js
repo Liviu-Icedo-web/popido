@@ -41,14 +41,7 @@ class Title extends Component {
                         <Menu.Item key="imagemap" style={{ color: '#fff' }}>{i18n.t('imagemap.imagemap')}</Menu.Item>
                         <Menu.Item key="workflow" style={{ color: '#fff' }}>{i18n.t('workflow.workflow')}</Menu.Item>
                     </Menu>
-                </FlexBox>
-                <FlexBox flex="1" justifyContent="flex-end">
-                    <Adsense.Google
-                        client="ca-pub-8569372752842198"
-                        slot="5790685139"
-                        style={{ display: 'inline-block', width: 600, height: 60 }}
-                    />
-                </FlexBox>
+                </FlexBox>               
             </FlexBox>
         );
     }
