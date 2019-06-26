@@ -108,6 +108,7 @@ class ImageMapItems extends Component {
             }
             const id = uuid();
             const option = Object.assign({}, item.option, { id });
+            console.log('option-->',option);
             canvasRef.handlers.add(option, centered);
         },
         onDrawingItem: (item) => {
@@ -177,20 +178,25 @@ class ImageMapItems extends Component {
             target.classList.remove('over');
         },
         onDrop: (e) => {
+            
             e = e || window.event;
+            
             if (e.preventDefault) {
                 e.preventDefault();
             }
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
+                        
             const { layerX, layerY } = e;
             const dt = e.dataTransfer;
-            if (dt.types.length && dt.types[0] === 'Files') {
+            
+            if (dt.types[1] === 'Files') {
                 const { files } = dt;
                 Array.from(files).forEach((file) => {
                     file.uid = uuid();
                     const { type } = file;
+                    console.log('type',type);
                     if (type === 'image/png' || type === 'image/jpeg' || type === 'image/jpg') {
                         const item = {
                             option: {
@@ -202,8 +208,9 @@ class ImageMapItems extends Component {
                         };
                         this.handlers.onAddItem(item, false);
                     } else {
+                        console.log('Error','Not supported file type '+type)
                         notification.warn({
-                            message: 'Not supported file type',
+                            message: 'Not supported file type '+type,
                         });
                     }
                 });
@@ -226,7 +233,7 @@ class ImageMapItems extends Component {
         </FlexBox>
     )
 
-    renderItem = (item, centered) => (
+    renderItem = (item, centered) => (      
         item.type === 'drawing' ? (
             <div
                 key={item.name}
@@ -248,7 +255,7 @@ class ImageMapItems extends Component {
             </div>
         ) : (
             <div
-                key={item.name}
+                key={item.name}                
                 draggable
                 onClick={e => this.handlers.onAddItem(item, centered)}
                 onDragStart={e => this.events.onDragStart(e, item)}
@@ -276,6 +283,8 @@ class ImageMapItems extends Component {
         const className = classnames('rde-editor-items', {
             minimize: collapse,
         });
+
+        
         return (
             <div className={className}>
                 <FlexBox flex="1" flexDirection="column" style={{ height: '100%' }}>

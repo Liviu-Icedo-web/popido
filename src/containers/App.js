@@ -27,17 +27,8 @@ class App extends Component {
                     <link rel="manifest" href="./manifest.json" />
                     <link rel="shortcut icon" href="./favicon.ico" />
                     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
-                    <title>React Design Editor</title>
-                    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97485289-3"></script>
-                    <script>
-                        {`
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', 'UA-97485289-3');
-                        `}
-                    </script>
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <title>Gif I do</title>
+                    
                 </Helmet>
                 <div className="rde-title">
                     <Title onChangeMenu={this.onChangeMenu} current={current} />
