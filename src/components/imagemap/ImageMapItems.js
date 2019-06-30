@@ -187,34 +187,31 @@ class ImageMapItems extends Component {
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
-                        
+
             const { layerX, layerY } = e;
-            const dt = e.dataTransfer;
-            
-            if (dt.types[1] === 'Files') {
-                const { files } = dt;
-                Array.from(files).forEach((file) => {
-                    file.uid = uuid();
-                    const { type } = file;
-                    console.log('type',type);
-                    if (type === 'image/png' || type === 'image/jpeg' || type === 'image/jpg') {
-                        const item = {
-                            option: {
-                                type: 'image',
-                                file,
-                                left: layerX,
-                                top: layerY,
-                            },
-                        };
-                        this.handlers.onAddItem(item, false);
-                    } else {
-                        console.log('Error','Not supported file type '+type)
-                        notification.warn({
-                            message: 'Not supported file type '+type,
-                        });
-                    }
-                });
-                return false;
+            const dt = e.dataTransfer.files ;
+                       
+            if (dt.length === 1) {
+                const  file  = dt[0];
+                file.uid = uuid();
+                const { type } = file;
+                if (type === 'image/png' || type === 'image/jpeg' || type === 'image/jpg') {
+                    const item = {
+                        option: {
+                            type: 'image',
+                            file,
+                            left: layerX,
+                            top: layerY,
+                        },
+                    };
+                    this.handlers.onAddItem(item, false);
+                } else {
+                    console.log('Error','Not supported file type '+type)
+                    notification.warn({
+                        message: 'Not supported file type '+type,
+                    });
+                }
+            return false;
             }
             const option = Object.assign({}, this.item.option, { left: layerX, top: layerY });
             const newItem = Object.assign({}, this.item, { option });
