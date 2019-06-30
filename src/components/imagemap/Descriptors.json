@@ -49,14 +49,29 @@
                 "prefix": "fas",
                 "name": "image"
             },
-            "option": {
-                "type": "image",
-                "width": 160,
-                "height": 160,
-                "name": "New image",
-                "src": "./images/sample/transparentBg.png"
-            }
-		}
+            "listImg": [
+                
+                    { 
+                       "option": {
+                            "type":"image",
+                            "width": 160,
+                            "height": 160,
+                            "name": "New image",
+                            "src": "./images/sample/bg2.jpg"
+                        } 
+                    },
+                    {
+                        "option": {
+                            "type":"image",
+                            "width": 160,
+                            "height": 160,
+                            "name": "New image 2",
+                            "src": "./images/sample/transparentBg.png"
+                        }                    
+                    } 
+                
+            ]
+        }
 	],
 	"SHAPE": [
 		{
@@ -74,7 +89,7 @@
                 "type": "triangle",
                 "width": 30,
                 "height": 30,
-                "name": "New shape"
+                "name": "New Triangle"
             }
         },
         {
@@ -89,7 +104,7 @@
                 "type": "rect",
                 "width": 40,
                 "height": 40,
-                "name": "New shape"
+                "name": "New Rectangle"
             }
         },
         {
@@ -103,7 +118,7 @@
             "option": {
                 "type": "circle",
                 "radius": 30,
-                "name": "New shape"
+                "name": "New Circle"
             }
 		}
 	],

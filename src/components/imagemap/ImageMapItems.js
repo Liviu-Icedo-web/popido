@@ -108,7 +108,6 @@ class ImageMapItems extends Component {
             }
             const id = uuid();
             const option = Object.assign({}, item.option, { id });
-            console.log('option-->',option);
             canvasRef.handlers.add(option, centered);
         },
         onDrawingItem: (item) => {
@@ -151,7 +150,7 @@ class ImageMapItems extends Component {
                 filteredDescriptors,
             });
         },
-        transformList: () => {
+        transformList: () => {            
             return Object.values(this.props.descriptors).reduce((prev, curr) => prev.concat(curr), []);
         },
     }
@@ -208,7 +207,7 @@ class ImageMapItems extends Component {
                 } else {
                     console.log('Error','Not supported file type '+type)
                     notification.warn({
-                        message: 'Not supported file type '+type,
+                        message: 'Not supported file type '+ type,
                     });
                 }
             return false;
@@ -224,55 +223,93 @@ class ImageMapItems extends Component {
         },
     }
 
-    renderItems = items => (
+    renderItems = items => (   
         <FlexBox flexWrap="wrap" flexDirection="column" style={{ width: '100%' }}>
             {items.map(item => this.renderItem(item))}
         </FlexBox>
     )
 
-    renderItem = (item, centered) => (      
-        item.type === 'drawing' ? (
-            <div
-                key={item.name}
-                draggable
-                onClick={e => this.handlers.onDrawingItem(item)}
-                className="rde-editor-items-item"
-                style={{ justifyContent: this.state.collapse ? 'center' : null }}
-            >
-                <span className="rde-editor-items-item-icon">
-                    <Icon name={item.icon.name} prefix={item.icon.prefix} style={item.icon.style} />
-                </span>
-                {
-                    this.state.collapse ? null : (
-                        <div className="rde-editor-items-item-text">
-                            {item.name}
-                        </div>
-                    )
-                }
-            </div>
-        ) : (
-            <div
-                key={item.name}                
-                draggable
-                onClick={e => this.handlers.onAddItem(item, centered)}
-                onDragStart={e => this.events.onDragStart(e, item)}
-                onDragEnd={e => this.events.onDragEnd(e, item)}
-                className="rde-editor-items-item"
-                style={{ justifyContent: this.state.collapse ? 'center' : null }}
-            >
-                <span className="rde-editor-items-item-icon">
-                    <Icon name={item.icon.name} prefix={item.icon.prefix} style={item.icon.style} />
-                </span>
-                {
-                    this.state.collapse ? null : (
-                        <div className="rde-editor-items-item-text">
-                            {item.name}
-                        </div>
-                    )
-                }
-            </div>
+    renderEditorItem = (item,centered) =>{
+        return  <div
+                    key={item.option.name}                
+                    draggable
+                    onClick={e => this.handlers.onAddItem(item, centered)}
+                    onDragStart={e => this.events.onDragStart(e, item)}
+                    onDragEnd={e => this.events.onDragEnd(e, item)}
+                    className="rde-editor-items-item"
+                    style={{ justifyContent: this.state.collapse ? 'center' : null }}
+                >
+                    <span className="rde-editor-items-item-icon">
+                        <Icon name={item.icon.name} prefix={item.icon.prefix} style={item.icon.style} />
+                    </span>
+                    {
+                        this.state.collapse ? null : (
+                            <div className="rde-editor-items-item-text">
+                                {item.name}
+                            </div>
+                        )
+                    }
+                </div>;
+    }
+    renderEditorImage = (item,centered) => {
+      
+        return item.listImg.map((img,index)=>(
+                <div
+                    key={img.option.name}                
+                    draggable
+                    onClick={e => this.handlers.onAddItem(img, centered)}
+                    onDragStart={e => this.events.onDragStart(e, img)}
+                    onDragEnd={e => this.events.onDragEnd(e, img)}
+                    className="rde-editor-items-item"
+                    style={{ justifyContent: this.state.collapse ? 'center' : null }}
+                >
+                    <span className="rde-editor-items-item-icon">
+                        <Icon name={item.icon.name} prefix={item.icon.prefix} style={item.icon.style} />
+                    </span>
+                    {
+                        this.state.collapse ? null : (
+                            <div className="rde-editor-items-item-text">
+                                {item.name}
+                            </div>
+                        )
+                    }
+                </div>  
+            )
         )
-    )
+    }     
+    
+    renderItem = (item, centered) => {
+        switch(item.type){
+            case 'drawing':
+                return    <div
+                            key={item.name}
+                            draggable
+                            onClick={e => this.handlers.onDrawingItem(item)}
+                            className="rde-editor-items-item"
+                            style={{ justifyContent: this.state.collapse ? 'center' : null }}
+                        >
+                            <span className="rde-editor-items-item-icon">
+                                <Icon name={item.icon.name} prefix={item.icon.prefix} style={item.icon.style} />
+                            </span>
+                            {
+                                this.state.collapse ? null : (
+                                    <div className="rde-editor-items-item-text">
+                                        {item.name}
+                                    </div>
+                                )
+                            }
+                        </div>;
+            case 'text':
+            case 'shape':
+            case 'element':
+               return this.renderEditorItem(item,centered);
+            case 'image':
+                return this.renderEditorImage(item,centered);  
+                             
+            default:
+                return null;
+        }   
+    }
 
     render() {
         const { descriptors } = this.props;
@@ -280,7 +317,6 @@ class ImageMapItems extends Component {
         const className = classnames('rde-editor-items', {
             minimize: collapse,
         });
-
         
         return (
             <div className={className}>
