@@ -32,11 +32,13 @@
             },
             "option": {
                 "type": "textbox",
-                "text": "",
+                "text": "Iliuta",
                 "width": 60,
                 "height": 30,
                 "fontSize": 32,
-                "name": "New text"
+                "fill":"#08979c", 
+                "name": "New text",
+                "fontFamily":"Courier new"
             }
 		}
 	],
