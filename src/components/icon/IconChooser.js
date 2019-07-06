@@ -81,8 +81,12 @@ class IconChooser extends Component {
         let prefix = 'fas';
         if (style === 'brands') {
             prefix = 'fab';
-        } else if (style === 'regular') {
+        } 
+        else if (style === 'regular') {
             prefix = 'far';
+        }
+        else if (style === 'poido') {
+            prefix = 'fap';
         }
         return prefix;
     }

@@ -246,7 +246,10 @@ class ImageMapEditor extends Component {
                     this.canvasRef.handlers.set('fontFamily', 'Font Awesome 5 Brands');
                 } else if (styles[0] === 'regular') {
                     this.canvasRef.handlers.set('fontFamily', 'Font Awesome 5 Regular');
-                } else {
+                } else if (styles[0] === 'poido') {
+                    this.canvasRef.handlers.set('fontFamily', 'Font Pop i do');
+                }
+                 else {
                     this.canvasRef.handlers.set('fontFamily', 'Font Awesome 5 Free');
                 }
                 this.canvasRef.handlers.set('text', String.fromCodePoint(uni));
