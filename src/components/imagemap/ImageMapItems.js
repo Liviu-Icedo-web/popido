@@ -302,6 +302,7 @@ class ImageMapItems extends Component {
             case 'text':
             case 'shape':
             case 'element':
+            case 'marker':
                return this.renderEditorItem(item,centered);
             case 'image':
                 return this.renderEditorImage(item,centered);  
