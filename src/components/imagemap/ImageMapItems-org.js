@@ -11,7 +11,7 @@ import IconsList from '../icon/IconsList';
 import Scrollbar from '../common/Scrollbar';
 import CommonButton from '../common/CommonButton';
 
-import MapProperties from '../imagemap/properties/MapProperties';
+import MapProperties from './properties/MapProperties';
 import { Tabs } from 'antd';
 
 notification.config({
@@ -27,8 +27,6 @@ class ImageMapItems extends Component {
 
     state = {
         activeKey: [],
-        activeTab:'image',
-        valueTab:'image',
         collapse: false,
         textSearch: '',
         descriptors: {},
@@ -159,13 +157,6 @@ class ImageMapItems extends Component {
         transformList: () => {            
             return Object.values(this.props.descriptors).reduce((prev, curr) => prev.concat(curr), []);
         },
-        onChangeTab: (activeTab,valueTab) => {
-            console.log('onChangeTab -->',activeTab);
-            this.setState({
-                activeTab:activeTab,
-                valueTab:activeTab
-            });
-        }
     }
 
     events = {
@@ -287,14 +278,28 @@ class ImageMapItems extends Component {
     
 
     renderIconslist = (item) =>{
-        return <div key={item.option.name} >
-                     <IconsList />
-                </div> 
-            }
+        return <div
+                    key={item.option.name} 
+                >
+                    {/*<IconsList />*/}
+                    {<Tabs
+                    tabPosition="left"
+                    style={{ height: '100%' }}
+                   
+                    tabBarStyle={{ marginTop: 60 }}
+                    >
+                        <Tabs.TabPane tab={<Icon name="cog" />} key="map">
+                            <IconsList />
+                        </Tabs.TabPane>
+                    
+                    </Tabs>}
+                </div>   
+            
+    }
 
     renderItem = (item, centered) => {
         switch(item.type){
-           case 'drawing':
+            case 'drawing':
                 return    <div
                             key={item.name}
                             draggable
@@ -318,9 +323,11 @@ class ImageMapItems extends Component {
             case 'element':
                 return this.renderEditorItem(item,centered);
             case 'marker':
-               return this.renderIconslist(item);             
+               //return this.renderIconslist(item); 
+               return this.renderEditorItem(item,centered);              
             case 'image':
-                return this.renderEditorImage(item,centered);                             
+                return this.renderEditorImage(item,centered);  
+                             
             default:
                 return null;
         }   
@@ -333,7 +340,7 @@ class ImageMapItems extends Component {
 
     render() {
         const { descriptors } = this.props;
-        const { collapse, textSearch, filteredDescriptors, activeKey, activeTab, valueTab } = this.state;
+        const { collapse, textSearch, filteredDescriptors, activeKey } = this.state;
         const className = classnames('rde-editor-items', {
             minimize: collapse,
         });
@@ -360,24 +367,35 @@ class ImageMapItems extends Component {
                             )
                         }
                     </FlexBox>
-                    <FlexBox flex="1" style={{ overflowY: 'hidden' }}>
+                    <Scrollbar>
+                        <FlexBox flex="1" style={{ overflowY: 'hidden' }}>
                             {
-                                 <Tabs  style={{ width: '100%' }} 
-                                        bordered={false} 
-                                        onChange={this.handlers.onChangeTab}  
-                                        activeKey={activeTab} 
-                                        value ={valueTab} 
-                                        tabPosition="left">
+                                textSearch.length ? (
+                                    this.renderItems(filteredDescriptors)
+                                ) : (
+                                    collapse ? (
+                                        <FlexBox flexWrap="wrap" flexDirection="column" style={{ width: '100%' }} justifyContent="center">
                                             {
-                                                Object.keys(descriptors).map((key,index )=> (
-                                                    <Tabs.TabPane tab={descriptors[key][0].type} key={descriptors[key][0].type} onClick={this.handlers.onChangeTab} value={descriptors[key][0].type}>
-                                                        {this.renderItems(descriptors[key])}
-                                                    </Tabs.TabPane>
+                                                this.handlers.transformList().map(item => (
+                                                    this.renderItem(item)
                                                 ))
                                             }
-                                 </Tabs>                                  
+                                        </FlexBox>
+                                    ) : (
+                                        <Collapse style={{ width: '100%' }} bordered={false} activeKey={activeKey.length ? activeKey : Object.keys(descriptors)} onChange={this.handlers.onChangeActiveKey}>
+                                            {
+                                                Object.keys(descriptors).map(key => (
+                                                    <Collapse.Panel key={key} header={key} showArrow={!collapse}>
+                                                        {this.renderItems(descriptors[key])}
+                                                    </Collapse.Panel>
+                                                ))
+                                            }
+                                        </Collapse>
+                                    )
+                                )
                             }
-                    </FlexBox>
+                        </FlexBox>
+                    </Scrollbar>
                 </FlexBox>
             </div>
         );

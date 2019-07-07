@@ -144,7 +144,7 @@ class IconsList extends Component {
                                         return (
                                             <Col onClick={onClickIcon.bind(this, ic)} key={name} span={4} className="rde-icon-container">
                                                 <div className="rde-icon-top">
-                                                    <Icon name={name} size={3} prefix={prefix} />
+                                                    <Icon name={name} size={26} prefix={prefix} />
                                                 </div>
                                                 <div className="rde-icon-bottom">
                                                     {name}

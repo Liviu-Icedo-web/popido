@@ -167,14 +167,12 @@ class ImageMapHeaderToolbar extends Component {
                         onClick={() => canvasRef.transactionHandlers.undo()}
                     >
                         <Icon name="undo-alt" style={{ marginRight: 8 }} />
-                        {'Undo'}
                     </Button>
                     <Button
                         className="rde-action-btn"
                         disabled={isCropping || (canvasRef && !canvasRef.redos.length)}
                         onClick={() => canvasRef.transactionHandlers.redo()}
                     >
-                        {'Redo'}
                         <Icon name="redo-alt" style={{ marginLeft: 8 }} />
                     </Button>
                 </FlexItem>

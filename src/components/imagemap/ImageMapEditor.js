@@ -680,7 +680,7 @@ class ImageMapEditor extends Component {
         );
         return (
             <Container
-                title={title}
+                //title={title}
                 content={content}
                 loading={loading}
                 className=""

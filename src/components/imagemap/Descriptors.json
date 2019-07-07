@@ -169,7 +169,7 @@
 		{
 			"name": "Element",
 			"description": "",
-			"type": "dom_element",
+			"type": "media",
 			"icon": {
                 "prefix": "fab",
                 "name": "html5"

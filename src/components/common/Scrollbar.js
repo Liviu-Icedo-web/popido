@@ -5,11 +5,11 @@ class Scrollbar extends Component {
     renderTrack = props => <div {...props} className="rde-track-vertical" />;
 
     render() {
-        console.log(this.props);
-        console.log('RenderTrack', this.renderTrack);
         return (
             <Scrollbars
-                renderTrackVertical={this.renderTrack}               
+                renderTrackVertical={this.renderTrack}   
+                autoHeight={true}
+                autoHeightMax={800}            
             >
                 {this.props.children}
             </Scrollbars>

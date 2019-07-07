@@ -31,7 +31,7 @@ class App extends Component {
                     
                 </Helmet>
                 <div className="rde-title">
-                    <Title onChangeMenu={this.onChangeMenu} current={current} />
+        {/*<Title onChangeMenu={this.onChangeMenu} current={current} />*/}
                 </div>
                 <div className="rde-content">
                     {

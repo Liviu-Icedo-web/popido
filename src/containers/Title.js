@@ -23,7 +23,7 @@ class Title extends Component {
         return (
             <FlexBox style={{ background: 'linear-gradient(141deg,#23303e,#404040 51%,#23303e 75%)' }} flexWrap="wrap" flex="1" alignItems="center">
                 <FlexBox style={{ marginLeft: 8 }} flex="0 1 auto">
-                    <span style={{ color: '#fff', fontSize: 24, fontWeight: 500 }}>Pop i do</span>
+                {<span style={{ color: '#fff', fontSize: 24, fontWeight: 500 }}>Pop i do</span>}
                 </FlexBox>
                 <FlexBox style={{ marginLeft: 88 }}>
                     <Menu mode="horizontal" theme="dark" style={{ background: 'transparent', fontSize: '16px' }} onClick={this.props.onChangeMenu} selectedKeys={[this.props.current]}>
