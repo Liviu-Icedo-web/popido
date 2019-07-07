@@ -11,7 +11,7 @@ export default {
                 <Form.Item>
                     {
                         getFieldDecorator('icon', {
-                            initialValue: data.icon,
+                            initialValue: data.icon,                            
                         })(
                             <IconChooser icon={data.icon} />,
                         )

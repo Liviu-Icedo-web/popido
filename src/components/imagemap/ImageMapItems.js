@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, notification, Input, message } from 'antd';
+import { Collapse, notification, Input, message,form } from 'antd';
 import uuid from 'uuid/v4';
 import classnames from 'classnames';
 import i18n from 'i18next';
 
 import { FlexBox } from '../flex';
 import Icon from '../icon/Icon';
+import IconsList from '../icon/IconsList';
 import Scrollbar from '../common/Scrollbar';
 import CommonButton from '../common/CommonButton';
+
+import MapProperties from '../imagemap/properties/MapProperties';
+import { Tabs } from 'antd';
 
 notification.config({
     top: 80,
@@ -224,7 +228,7 @@ class ImageMapItems extends Component {
     }
 
     renderItems = items => (   
-        <FlexBox flexWrap="wrap" flexDirection="column" style={{ width: '100%' }}>
+        <FlexBox  flexDirection="column" style={{ width: '100%' }}>
             {items.map(item => this.renderItem(item))}
         </FlexBox>
     )
@@ -278,6 +282,27 @@ class ImageMapItems extends Component {
         )
     }     
     
+
+    renderIconslist = (item) =>{
+        return <div
+                    key={item.option.name} 
+                >
+                   <IconsList />
+                    {/*<Tabs
+                    tabPosition="left"
+                    style={{ height: '100%' }}
+                   
+                    tabBarStyle={{ marginTop: 60 }}
+                    >
+                        <Tabs.TabPane tab={<Icon name="cog" />} key="map">
+                            <IconsList />
+                        </Tabs.TabPane>
+                    
+                    </Tabs>*/}
+                </div>   
+            
+    }
+
     renderItem = (item, centered) => {
         switch(item.type){
             case 'drawing':
@@ -302,8 +327,10 @@ class ImageMapItems extends Component {
             case 'text':
             case 'shape':
             case 'element':
+                return this.renderEditorItem(item,centered);
             case 'marker':
-               return this.renderEditorItem(item,centered);
+               return this.renderIconslist(item); 
+               //return this.renderEditorItem(item,centered);              
             case 'image':
                 return this.renderEditorImage(item,centered);  
                              
@@ -318,7 +345,6 @@ class ImageMapItems extends Component {
         const className = classnames('rde-editor-items', {
             minimize: collapse,
         });
-        
         return (
             <div className={className}>
                 <FlexBox flex="1" flexDirection="column" style={{ height: '100%' }}>
