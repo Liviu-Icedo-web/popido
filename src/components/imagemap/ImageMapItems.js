@@ -27,8 +27,7 @@ class ImageMapItems extends Component {
 
     state = {
         activeKey: [],
-        activeTab:'image',
-        valueTab:'image',
+        activeTab:'image',        
         collapse: false,
         textSearch: '',
         descriptors: {},
@@ -159,11 +158,9 @@ class ImageMapItems extends Component {
         transformList: () => {            
             return Object.values(this.props.descriptors).reduce((prev, curr) => prev.concat(curr), []);
         },
-        onChangeTab: (activeTab,valueTab) => {
-            console.log('onChangeTab -->',activeTab);
+        onChangeTab: (activeTab) => {
             this.setState({
-                activeTab:activeTab,
-                valueTab:activeTab
+                activeTab
             });
         }
     }
@@ -337,6 +334,7 @@ class ImageMapItems extends Component {
         const className = classnames('rde-editor-items', {
             minimize: collapse,
         });
+        
         return (
             <div className={className}>
                 <FlexBox flex="1" flexDirection="column" style={{ height: '100%' }}>
@@ -364,13 +362,11 @@ class ImageMapItems extends Component {
                             {
                                  <Tabs  style={{ width: '100%' }} 
                                         bordered={false} 
-                                        onChange={this.handlers.onChangeTab}  
-                                        activeKey={activeTab} 
-                                        value ={valueTab} 
+                                        onChange={this.handlers.onChangeTab}                                           
                                         tabPosition="left">
                                             {
                                                 Object.keys(descriptors).map((key,index )=> (
-                                                    <Tabs.TabPane tab={descriptors[key][0].type} key={descriptors[key][0].type} onClick={this.handlers.onChangeTab} value={descriptors[key][0].type}>
+                                                    <Tabs.TabPane tab={descriptors[key][0].type} key={descriptors[key][0].type}>
                                                         {this.renderItems(descriptors[key])}
                                                     </Tabs.TabPane>
                                                 ))

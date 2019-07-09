@@ -29,7 +29,7 @@ class ImageMapConfigurations extends Component {
     }
 
     handlers = {
-        onChangeTab: (activeKey) => {
+        onChangeTab: (activeKey) => {            
             this.setState({
                 activeKey,
             });

@@ -105,6 +105,7 @@
     "common": {
         "name": "Name",
         "description": "Description",
+        "allCategories":"All Categories",
         "width": "Width",
         "height": "Height",
         "icon": "Icon",
