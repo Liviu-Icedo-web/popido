@@ -121,6 +121,25 @@ class IconsList extends Component {
             .map(icon => ({ [icon]: icons[icon] }));
     }
 
+
+    getCategories  = () =>{
+        
+       return <Menu>
+            {
+                Object.values(icons).map((icon) =>{
+                    console.log(icon.style);
+                    <Menu.Item>
+                        <a target="_blank" rel="noopener noreferrer" >
+                                 {icon.style}
+                        </a>
+                    </Menu.Item>
+                })        
+            }
+        </Menu>
+        
+
+    }
+
     render() {
         const { onOk, onCancel, onClick, onClickIcon, onSearch } = this.handlers;
         const { icon, visible, textSearch } = this.state;
@@ -132,17 +151,17 @@ class IconsList extends Component {
         );
         const filteredIcons = this.getIcons(textSearch);
         const filteredIconsLength = filteredIcons.length;
-        const title = (
-            <div style={{ padding: '0 24px' }}>
-                <Input
-                    onChange={(e) => { onSearch(e.target.value); }}
-                    placeholder={i18n.t('imagemap.marker.search-icon', { length: filteredIconsLength })}
-                />
-            </div>
-        );
+
+       
+        Object.values(icons).map((icon,i) =>{
+            console.log(icon.styles[0]);            
+           
+        }) 
+        
         return (
+            
             <Scrollbar >
-                <Dropdown overlay={this.menu} title={title}>
+                <Dropdown overlay={this.menu}>
                         <a className="ant-dropdown-link" href="#">
                             {i18n.t('common.allCategories')} <Icon name={'th-list'} size={12} prefix={'fa'} />
                         </a>
@@ -150,6 +169,7 @@ class IconsList extends Component {
 
                 
                         <div style={{ padding: '0 24px' }}>
+                            
                             <Input
                                 onChange={(e) => { onSearch(e.target.value); }}
                                 placeholder={i18n.t('imagemap.marker.search-icon', { length: filteredIconsLength })}
@@ -169,7 +189,7 @@ class IconsList extends Component {
                                         const metadata = ic[name];
                                         const prefix = this.getPrefix(metadata.styles[0]);
                                         return (
-                                            <Col onClick={onClickIcon.bind(this, ic)} key={name} span={6} className="rde-icon-container">
+                                            <Col onClick={onClickIcon.bind(this, ic)} key={name} span={7} className="rde-icon-container">
                                                 <div className="rde-icon-top">
                                                     <Icon name={name} size={26} prefix={prefix} />
                                                 </div>
