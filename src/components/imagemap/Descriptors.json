@@ -214,10 +214,5 @@
                 "loop": true
             }
 		}
-    ],
-    "CATEGORIES":{
-        "1":"DEMO",
-        "2":"Item2"
-
-    }
+    ]
 }

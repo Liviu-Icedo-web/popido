@@ -11,6 +11,7 @@ import IconsList from '../icon/IconsList';
 import Scrollbar from '../common/Scrollbar';
 import CommonButton from '../common/CommonButton';
 
+
 import MapProperties from '../imagemap/properties/MapProperties';
 import { Tabs } from 'antd';
 
@@ -36,7 +37,7 @@ class ImageMapItems extends Component {
 
     componentDidMount() {
         const { canvasRef } = this.props;
-        this.waitForCanvasRender(canvasRef);
+        this.waitForCanvasRender(canvasRef);     
     }
 
     componentWillReceiveProps(nextProps) {

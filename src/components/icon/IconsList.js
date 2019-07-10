@@ -71,7 +71,17 @@ class IconsList extends Component {
     state = {
         icon: this.props.icon,
         textSearch: '',
-        visible: false,
+        visible: false,        
+        categoriesIcon:{},
+    }
+
+    componentDidMount() {
+        
+        import('../imagemap/Categories.json').then((categoriesIcon) => {
+            this.setState({
+                categoriesIcon,
+            });
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -153,10 +163,8 @@ class IconsList extends Component {
         const filteredIconsLength = filteredIcons.length;
 
        
-        Object.values(icons).map((icon,i) =>{
-            console.log(icon.styles[0]);            
-           
-        }) 
+        console.log(this.state.categoriesIcon);
+        
         
         return (
             
