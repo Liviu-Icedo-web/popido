@@ -5,6 +5,7 @@ import IconChooser from '../../icon/IconChooser';
 
 export default {
     render(canvasRef, form, data) {
+        console.log('MapProperties', data.icon);
         const { getFieldDecorator } = form;
         return (
             <React.Fragment>

@@ -285,12 +285,14 @@ class ImageMapItems extends Component {
     
 
     renderIconslist = (item) =>{
+        console.log('Entraaa');
         return <div key={item.option.name} >
-                     <IconsList />
+                     <IconsList handlers={this.handlers}/>
                 </div> 
             }
 
     renderItem = (item, centered) => {
+        console.log(item.type);
         switch(item.type){
            case 'drawing':
                 return    <div
@@ -314,8 +316,9 @@ class ImageMapItems extends Component {
             case 'text':
             case 'shape':
             case 'element':
-                return this.renderEditorItem(item,centered);
             case 'marker':
+                return this.renderEditorItem(item,centered);            
+            case 'icons':                    
                return this.renderIconslist(item);             
             case 'image':
                 return this.renderEditorImage(item,centered);                             
@@ -334,7 +337,7 @@ class ImageMapItems extends Component {
         const { collapse, textSearch, filteredDescriptors, activeKey, activeTab, valueTab } = this.state;
         const className = classnames('rde-editor-items', {
             minimize: collapse,
-        });
+        });        
         
         return (
             <div className={className}>

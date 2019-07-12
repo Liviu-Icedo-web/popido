@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { Button, Modal, Form, Col, Row, Input,Menu, Dropdown } from 'antd';
+import { Button, Modal, Form, Col, Row, Input, Select } from 'antd';
 import i18n from 'i18next';
 
 import Icon from './Icon';
@@ -9,6 +9,8 @@ import icons from '../../libs/fontawesome-5.2.0/metadata/icons.json';
 import { FlexBox } from '../flex';
 import Scrollbar from '../common/Scrollbar';
 import { i18nClient } from '../../i18n';
+
+const {  } = Select;
 
 class IconsList extends Component {
     handlers = {
@@ -104,26 +106,6 @@ class IconsList extends Component {
         return prefix;
     }
 
-     menu = (
-        <Menu>
-          <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-              1st menu item
-            </a>
-          </Menu.Item>
-          <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-              2nd menu item
-            </a>
-          </Menu.Item>
-          <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-              3rd menu item
-            </a>
-          </Menu.Item>
-        </Menu>
-      );
-
     getIcons = (textSearch) => {
         const lowerCase = textSearch.toLowerCase();
         return Object.keys(icons)
@@ -131,26 +113,13 @@ class IconsList extends Component {
             .map(icon => ({ [icon]: icons[icon] }));
     }
 
-
-    getCategories  = () =>{
-        
-       return <Menu>
-            {
-                Object.values(icons).map((icon) =>{
-                    console.log(icon.style);
-                    <Menu.Item>
-                        <a target="_blank" rel="noopener noreferrer" >
-                                 {icon.style}
-                        </a>
-                    </Menu.Item>
-                })        
-            }
-        </Menu>
-        
-
-    }
+    handleSelectCategories = (value) => {
+        //TO DO
+        console.log(`selected ${value}`);
+      }
 
     render() {
+        console.log(this.props);
         const { onOk, onCancel, onClick, onClickIcon, onSearch } = this.handlers;
         const { icon, visible, textSearch } = this.state;
         const label = (
@@ -161,21 +130,27 @@ class IconsList extends Component {
         );
         const filteredIcons = this.getIcons(textSearch);
         const filteredIconsLength = filteredIcons.length;
-
-       
-        console.log(this.state.categoriesIcon);
-        
         
         return (
             
-            <Scrollbar >
-                <Dropdown overlay={this.menu}>
-                        <a className="ant-dropdown-link" href="#">
-                            {i18n.t('common.allCategories')} <Icon name={'th-list'} size={12} prefix={'fa'} />
-                        </a>
-                </Dropdown>
-
-                
+            <Scrollbar >   
+                    <Select
+                        mode="multiple"
+                        style={{ width: '100%' }}
+                        placeholder="filter by categories"
+                        defaultValue={['Code']}                    
+                        LabelProp="label" 
+                        onChange={this.handleSelectCategories}              
+                    >            
+                        { 
+                            Object.values(this.state.categoriesIcon).map((cat,index) =>{                                                                
+                                return  <Option value={cat.name} key={index}>
+                                            <Icon name={cat.icon} size={12} prefix={this.getPrefix(cat.styles)} />
+                                            {cat.name}                                            
+                                        </Option>
+                            })
+                        }
+                    </Select>    
                         <div style={{ padding: '0 24px' }}>
                             
                             <Input
