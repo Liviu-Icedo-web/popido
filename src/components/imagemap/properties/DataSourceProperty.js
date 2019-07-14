@@ -23,8 +23,8 @@ export default {
                                 <Select.Option value="shake">Shake</Select.Option>
                                 <Select.Option value="scaling">Scaling</Select.Option>
                                 <Select.Option value="rotation">Rotation</Select.Option>
-                                <Select.Option value="flash">Flash</Select.Option>
-                            </Select>,
+                                <Select.Option value="flash">Flash</Select.Option>                                
+                            </Select>                            
                         )
                     }
                 </Form.Item>

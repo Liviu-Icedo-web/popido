@@ -27,6 +27,7 @@ export default {
                                 <Select.Option value="scaling">{i18n.t('imagemap.animation.scaling')}</Select.Option>
                                 <Select.Option value="rotation">{i18n.t('imagemap.animation.rotation')}</Select.Option>
                                 <Select.Option value="flash">{i18n.t('imagemap.animation.flash')}</Select.Option>
+                                <Select.Option value="liviu">Liviu</Select.Option>
                             </Select>,
                         )
                     }

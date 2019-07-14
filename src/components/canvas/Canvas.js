@@ -1572,6 +1572,10 @@ class Canvas extends Component {
             this.canvas.renderAll();
         },
         getAnimation: (obj, hasControls) => {
+            console.log('Anime -->', anime);
+            console.log('Obj Animation -->',obj.animation);
+            console.log('Obj -->',obj)
+            console.log('hasControls -->',hasControls)
             const { delay = 100, duration = 100, autoplay = true, loop = true, type, ...other } = obj.animation;
             const option = {
                 targets: obj,
@@ -1613,6 +1617,10 @@ class Canvas extends Component {
                     easing: 'easeInQuad',
                 });
             } else if (type === 'bounce') {
+                console.log('type-->', type);
+                console.log('other-->', other);
+                console.log('obj-->', obj);
+               
                 const { offset = 1 } = other;
                 if (other.bounce === 'vertical') {
                     obj.set('originTop', obj.top);

@@ -19,6 +19,7 @@ import '../../libs/fontawesome-5.2.0/css/all.css';
 import '../../styles/index.less';
 import Container from '../common/Container';
 import CommonButton from '../common/CommonButton';
+import TimeLine from '../timeline/indextimeline';
 
 const propertiesToInclude = [
     'id',
@@ -76,6 +77,52 @@ const defaultOptions = {
         effect: 'style',
     },
 };
+
+
+
+const layers = [
+    {
+        id: "3d1df1b4-4d9d-45a4-bf14-cb580ee74675",
+        name: "Market data"
+    },
+    {
+        id: "7d8c4210-0cfa-4a10-8b21-01e6601e00bf",
+        name: "Historical"
+    },
+    {
+        id: "65079f30-47a8-4469-833e-4f0eea04d233",
+        name: "Protfolio"
+    },
+    {
+        id: "65079f30-47a8-4469-833e-4f0eea04d239",
+        name: "Headline"
+    }
+
+];
+const frames = {
+    "3d1df1b4-4d9d-45a4-bf14-cb580ee74675": [{
+        name: "webFg",
+        second: 0,
+        duration: 70
+    }],
+    "7d8c4210-0cfa-4a10-8b21-01e6601e00bf": [{
+        name: "Thomas Reuter",
+        second: 130,
+        duration: 200
+    }],
+    "65079f30-47a8-4469-833e-4f0eea04d233": [{
+        name: "Morning Star",
+        second: 10,
+        duration: 150
+    }],
+    "65079f30-47a8-4469-833e-4f0eea04d239": [{
+        name: "BolsaMania",
+        second: 15,
+        duration: 150
+    }]
+};
+
+const seconds =5;
 
 class ImageMapEditor extends Component {
     state = {
@@ -534,6 +581,10 @@ class ImageMapEditor extends Component {
         });
     }
 
+    onUpdateFrames = (frames) => {
+        //TODO: deal with frames
+    }
+
     render() {
         const {
             preview,
@@ -661,7 +712,12 @@ class ImageMapEditor extends Component {
                         />
                     </div>
                     <div className="rde-editor-footer-toolbar">
-                        <ImageMapFooterToolbar canvasRef={this.canvasRef} preview={preview} onChangePreview={onChangePreview} zoomRatio={zoomRatio} />
+                        <div className="footer-tollbar-canvas">
+                            <ImageMapFooterToolbar canvasRef={this.canvasRef} preview={preview} onChangePreview={onChangePreview} zoomRatio={zoomRatio} />
+                        </div>
+                        <div className="footer-time-line">
+                            <TimeLine layers={layers} frames={frames} seconds={seconds} onUpdateFrames={this.onUpdateFrames }/>
+                        </div>
                     </div>
                 </div>
                 <ImageMapConfigurations
@@ -676,6 +732,7 @@ class ImageMapEditor extends Component {
                     dataSources={dataSources}
                 />
                 <ImageMapPreview ref={(c) => { this.preview = c; }} preview={preview} onChangePreview={onChangePreview} onTooltip={onTooltip} onLink={onLink} />
+                
             </div>
         );
         return (

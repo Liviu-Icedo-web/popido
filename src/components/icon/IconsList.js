@@ -14,23 +14,8 @@ const {  } = Select;
 
 class IconsList extends Component {
     handlers = {
-        onOk: () => {
-            const { icon } = this.state;
-            const { onChange } = this.props;
-            if (onChange) {
-                onChange(icon);
-            }
-            this.setState({
-                visible: false,
-            });
-        },
-        onCancel: () => {
-            this.modalHandlers.onHide();
-        },
-        onClick: () => {
-            this.modalHandlers.onShow();
-        },
         onClickIcon: (icon) => {
+            console.log('iconList',icon)
             this.setState({
                 icon,
             }, () => {
@@ -38,7 +23,6 @@ class IconsList extends Component {
                 if (onChange) {
                     onChange(icon);
                 }
-                this.modalHandlers.onHide();
             });
         },
         onSearch: debounce((value) => {
@@ -46,19 +30,6 @@ class IconsList extends Component {
                 textSearch: value,
             });
         }, 500),
-    }
-
-    modalHandlers = {
-        onShow: () => {
-            this.setState({
-                visible: true,
-            });
-        },
-        onHide: () => {
-            this.setState({
-                visible: false,
-            });
-        },
     }
 
     static propTypes = {
@@ -75,6 +46,26 @@ class IconsList extends Component {
         textSearch: '',
         visible: false,        
         categoriesIcon:{},
+        itemToPass:{
+			"name": "marker",
+			"description": "",
+			"type": "marker",
+			"icon": {
+                "prefix": "fap",
+                "name": "map-icon-alt"
+            },
+            "option": {
+                "type": "i-text",
+                "text": "\ue806",
+                "fontFamily": "Font Pop i do",
+                "fontWeight": 900,
+                "fontSize": 60,
+                "width": 30,
+                "height": 30,
+                "editable": false,
+                "name": "New Icon"
+            }
+		}
     }
 
     componentDidMount() {
@@ -118,16 +109,9 @@ class IconsList extends Component {
         console.log(`selected ${value}`);
       }
 
-    render() {
-        console.log(this.props);
-        const { onOk, onCancel, onClick, onClickIcon, onSearch } = this.handlers;
-        const { icon, visible, textSearch } = this.state;
-        const label = (
-            <React.Fragment>
-                <span style={{ marginRight: 8 }}>{i18n.t('common.icon')}</span>
-                <Icon name={Object.keys(icon)[0]} prefix={this.getPrefix(icon[Object.keys(icon)[0]].styles[0])} />
-            </React.Fragment>
-        );
+    render() {        
+        const { onClickIcon, onSearch } = this.handlers;
+        const { icon, visible, textSearch, itemToPass } = this.state;       
         const filteredIcons = this.getIcons(textSearch);
         const filteredIconsLength = filteredIcons.length;
         
@@ -151,28 +135,25 @@ class IconsList extends Component {
                             })
                         }
                     </Select>    
-                        <div style={{ padding: '0 24px' }}>
-                            
+                        <div style={{ padding: '0 24px' }}>                            
                             <Input
                                 onChange={(e) => { onSearch(e.target.value); }}
                                 placeholder={i18n.t('imagemap.marker.search-icon', { length: filteredIconsLength })}
                             />
                         </div>
                                   
-                        <FlexBox
-                            onOk={onOk}
-                            onCancel={onCancel}                                                    
+                        <FlexBox                                                  
                             flex="1" 
                             style={{ overflowY: 'hidden' }}                          
                         >
                             <Row>
                                 {
-                                    filteredIcons.map((ic) => {
-                                        const name = Object.keys(ic)[0];
+                                    filteredIcons.map((ic) => { 
+                                        const name = Object.keys(ic)[0];                                      
                                         const metadata = ic[name];
-                                        const prefix = this.getPrefix(metadata.styles[0]);
+                                        const prefix = this.getPrefix(ic[name].styles[0]);                                                                              
                                         return (
-                                            <Col onClick={onClickIcon.bind(this, ic)} key={name} span={7} className="rde-icon-container">
+                                            <Col onClick={e => this.props.handlers.onAddItem(itemToPass,'centred')} key={name} span={7} className="rde-icon-container">
                                                 <div className="rde-icon-top">
                                                     <Icon name={name} size={26} prefix={prefix} />
                                                 </div>

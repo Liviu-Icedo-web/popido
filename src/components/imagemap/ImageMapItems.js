@@ -285,14 +285,12 @@ class ImageMapItems extends Component {
     
 
     renderIconslist = (item) =>{
-        console.log('Entraaa');
         return <div key={item.option.name} >
                      <IconsList handlers={this.handlers}/>
                 </div> 
             }
 
     renderItem = (item, centered) => {
-        console.log(item.type);
         switch(item.type){
            case 'drawing':
                 return    <div
