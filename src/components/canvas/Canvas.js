@@ -1438,6 +1438,7 @@ class Canvas extends Component {
         },
         moving: (e) => {
             const delta = new fabric.Point(e.movementX, e.movementY);
+            console.log('delta',delta);
             this.canvas.relativePan(delta);
         },
     }
@@ -1456,6 +1457,18 @@ class Canvas extends Component {
                 return;
             }
             const instance = this.animationHandlers.getAnimation(findObject, hasControls);
+            Object.assign(instance.animations[2], {
+                duration:1000
+            });
+            Object.assign(instance.animations[2].tweens[0], {
+                duration:1000,
+                end:instance.animations[2].tweens[0].duration+instance.animations[2].tweens[0].delay
+            });  
+            
+            console.log('instance 2',instance.animations[2].duration);
+            console.log('instance tweens',instance.animations[2].tweens[0].duration);
+            console.log('instance',instance);
+            console.log('Finde Object',findObject);
             if (instance) {
                 findObject.set('anime', instance);
                 findObject.set({
@@ -1472,7 +1485,7 @@ class Canvas extends Component {
             const findObject = this.handlers.findById(id);
             if (!findObject) {
                 return;
-            }
+            }            
             findObject.anime.pause();
         },
         stop: (id, hasControls = true) => {
@@ -1535,6 +1548,10 @@ class Canvas extends Component {
                     });
                 }
             } else if (type === 'shake') {
+                console.log('Init Animation Anime -->', anime);
+                console.log('Init getAnimation Obj Animation -->',obj.animation);
+                console.log('Init tAnimation Obj -->',obj)
+                console.log('Init getAnimation hasControls -->',hasControls)
                 if (obj.animation.shake === 'vertical') {
                     Object.assign(option, {
                         top: obj.originTop,
@@ -1546,7 +1563,24 @@ class Canvas extends Component {
                         originLeft: null,
                     });
                 }
-            } else if (type === 'scaling') {
+            } else if (type === 'liviu') {
+                console.log('Init Animation Anime -->', anime);
+                console.log('Init getAnimation Obj Animation -->',obj.animation);
+                console.log('Init tAnimation Obj -->',obj)
+                console.log('Init getAnimation hasControls -->',hasControls)
+               
+                    Object.assign(option, {
+                        top: obj.originTop,
+                        originTop: null,
+                        left: obj.originLeft,
+                        originLeft: null,
+                        opacity: 0,
+                        originOpacity: null,
+                    }); 
+                                
+            }
+            
+            else if (type === 'scaling') {
                 Object.assign(option, {
                     scaleX: obj.originScaleX,
                     scaleY: obj.originScaleY,
@@ -1572,10 +1606,10 @@ class Canvas extends Component {
             this.canvas.renderAll();
         },
         getAnimation: (obj, hasControls) => {
-            console.log('Anime -->', anime);
-            console.log('Obj Animation -->',obj.animation);
-            console.log('Obj -->',obj)
-            console.log('hasControls -->',hasControls)
+            console.log('getAnimation Anime -->', anime);
+            console.log('getAnimation Obj Animation -->',obj.animation);
+            console.log('getAnimation Obj -->',obj)
+            console.log('getAnimation hasControls -->',hasControls)
             const { delay = 100, duration = 100, autoplay = true, loop = true, type, ...other } = obj.animation;
             const option = {
                 targets: obj,
@@ -1617,10 +1651,6 @@ class Canvas extends Component {
                     easing: 'easeInQuad',
                 });
             } else if (type === 'bounce') {
-                console.log('type-->', type);
-                console.log('other-->', other);
-                console.log('obj-->', obj);
-               
                 const { offset = 1 } = other;
                 if (other.bounce === 'vertical') {
                     obj.set('originTop', obj.top);
@@ -1654,7 +1684,31 @@ class Canvas extends Component {
                         duration: 500,
                     });
                 }
-            } else if (type === 'scaling') {
+            }else if (type === 'liviu') {
+                const { offset = 1 } = other;
+                
+                    obj.set('originTop', obj.top);
+                    obj.set('originLeft', obj.left);
+                    const { opacity = 1 } = other;
+                    
+                    obj.set('opacity', 0);
+                    console.log('Liviu', obj);
+                    console.log('Liviu left', obj.top);
+                    console.log('Liviu top', obj.left);
+                    console.log('Liviu Opacity', opacity);
+                    console.log('Liviu obj opacity', obj.opacity);
+
+
+                    Object.assign(option, {
+                        top: obj.top + 120,
+                        left: obj.left - 210,
+                        delay: 1000,
+                        easing: 'easeInQuad',
+                        duration: 5000,
+                        opacity,
+                    });                   
+            }              
+            else if (type === 'scaling') {
                 const { scale = 1 } = other;
                 obj.set('originScaleX', obj.scaleX);
                 obj.set('originScaleY', obj.scaleY);
@@ -4225,7 +4279,7 @@ class Canvas extends Component {
     }
 
     render() {
-        const { id } = this.state;
+        const { id } = this.state;        
         return (
             <div
                 ref={this.container}
